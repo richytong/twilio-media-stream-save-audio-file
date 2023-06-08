@@ -7,7 +7,7 @@
 [![NPM](https://nodei.co/npm/twilio-media-stream-save-audio-file.png)](https://npmjs.org/package/twilio-media-stream-save-audio-file)
 
 <p>
-  <img alt="Node.js CI" src="https://github.com/jremi/twilio-media-stream-save-audio-file/workflows/Node.js%20CI/badge.svg?branch=master">
+  <img alt="Node.js CI" src="https://github.com/jremi/twilio-media-stream-save-audio-file/workflows/Node.js%20CI/badge.svg?branch=main">
   <img alt="Version" src="https://img.shields.io/badge/version-0.0.3-blue.svg?cacheSeconds=2592000" />
   <a href="#" target="_blank">
     <img alt="License: UNLICENSED" src="https://img.shields.io/badge/License-UNLICENSED-yellow.svg" />
@@ -40,6 +40,8 @@ const mediaStreamSaver = new TwilioMediaStreamSaveAudioFile({
 
 wss.on("connection", (ws) => {
   console.log("New connection initiated!");
+
+  mediaStreamSaver.setWebsocket(ws);
 
   ws.on("message", (message) => {
     const msg = JSON.parse(message);
@@ -78,6 +80,8 @@ When you instantiate the library you can pass in the following options. They are
 - `onSaved` - **(Optional)** This is a optional callback function that you can provide if you want to be notified when the audio wav file has been saved.
 
 ## Notes
+
+- Once your websocket has connected call `mediaStreamSaver.setWebsocket(ws)`. The `ws` is what is returned from the the websocket `connection` event.
 
 - Inside the connected websocket `message` event make sure to call each of the corresponding methods for the incoming Twilio Media Stream message events: 
 
